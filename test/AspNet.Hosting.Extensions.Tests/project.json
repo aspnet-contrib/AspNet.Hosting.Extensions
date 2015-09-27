@@ -1,0 +1,29 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "ASP.NET 5 hosting extension tests.",
+  "authors": [ "Martin Johns" ],
+  "owners": [ "Kévin Chalet" ],
+
+  "projectUrl": "https://github.com/aspnet-contrib/AspNet.Hosting.Extensions",
+  "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html",
+
+  "compilationOptions": {
+    "warningsAsErrors": true
+  },
+
+  "dependencies": {
+    "AspNet.Hosting.Extensions": "",
+    "Microsoft.AspNet.Testing": "1.0.0-*",
+    "Microsoft.AspNet.TestHost": "1.0.0-*",
+    "xunit.runner.aspnet": "2.0.0-*"
+  },
+  
+  "commands": {
+    "test": "xunit.runner.aspnet"
+  },
+
+  "frameworks": {
+    "dnx451": { },
+    "dnxcore50": { }
+  }
+}
