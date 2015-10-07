@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
-using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Builder.Internal;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Hosting.Builder;
@@ -19,7 +18,7 @@ using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Internal;
 using Microsoft.Framework.Logging;
 
-namespace AspNet.Hosting.Extensions {
+namespace Microsoft.AspNet.Builder {
     /// <summary>
     /// Provides extension methods for <see cref="IApplicationBuilder"/>.
     /// </summary>
