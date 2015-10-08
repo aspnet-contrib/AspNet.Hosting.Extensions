@@ -14,7 +14,7 @@
     "dependencies": {
         "Microsoft.AspNet.Hosting": "1.0.0-*",
 
-        "Microsoft.Framework.NotNullAttribute.Internal": {
+        "Microsoft.Extensions.NotNullAttribute.Sources": {
             "type": "build",
             "version": "1.0.0-*"
         }
