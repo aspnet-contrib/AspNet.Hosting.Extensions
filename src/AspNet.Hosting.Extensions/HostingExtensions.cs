@@ -233,8 +233,11 @@ namespace Microsoft.AspNet.Builder {
             services.AddInstance(provider.GetRequiredService<IApplicationLifetime>());
             services.AddInstance(provider.GetRequiredService<IHttpContextFactory>());
             services.AddInstance(provider.GetRequiredService<IHttpContextAccessor>());
+
+#pragma warning disable 0618
             services.AddInstance(provider.GetRequiredService<TelemetrySource>());
             services.AddInstance(provider.GetRequiredService<TelemetryListener>());
+#pragma warning restore 0618
 
             return services;
         }
