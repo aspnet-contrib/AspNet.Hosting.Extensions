@@ -6,17 +6,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
+using System.Diagnostics;
 using Microsoft.AspNet.Builder.Internal;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Hosting.Builder;
 using Microsoft.AspNet.Hosting.Startup;
 using Microsoft.AspNet.Http;
-using Microsoft.Dnx.Runtime;
-using Microsoft.Dnx.Runtime.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Internal;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace Microsoft.AspNet.Builder {
     /// <summary>
@@ -215,12 +214,24 @@ namespace Microsoft.AspNet.Builder {
         private static ServiceCollection CreateDefaultServiceCollection([NotNull] IServiceProvider provider) {
             var services = new ServiceCollection();
 
-            // Retrieve the runtime services from the host provider.
-            var manifest = CallContextServiceLocator.Locator.ServiceProvider.GetService<IRuntimeServices>();
-            if (manifest != null) {
-                foreach (var service in manifest.Services) {
-                    services.AddTransient(service, sp => provider.GetService(service));
-                }
+            if (PlatformServices.Default?.Application != null) {
+                services.TryAdd(ServiceDescriptor.Instance(PlatformServices.Default.Application));
+            }
+
+            if (PlatformServices.Default?.Runtime != null) {
+                services.TryAdd(ServiceDescriptor.Instance(PlatformServices.Default.Runtime));
+            }
+
+            if (PlatformServices.Default?.AssemblyLoadContextAccessor != null) {
+                services.TryAdd(ServiceDescriptor.Instance(PlatformServices.Default.AssemblyLoadContextAccessor));
+            }
+
+            if (PlatformServices.Default?.AssemblyLoaderContainer != null) {
+                services.TryAdd(ServiceDescriptor.Instance(PlatformServices.Default.AssemblyLoaderContainer));
+            }
+
+            if (PlatformServices.Default?.LibraryManager != null) {
+                services.TryAdd(ServiceDescriptor.Instance(PlatformServices.Default.LibraryManager));
             }
 
             services.AddLogging();
@@ -234,10 +245,8 @@ namespace Microsoft.AspNet.Builder {
             services.AddInstance(provider.GetRequiredService<IHttpContextFactory>());
             services.AddInstance(provider.GetRequiredService<IHttpContextAccessor>());
 
-#pragma warning disable 0618
-            services.AddInstance(provider.GetRequiredService<TelemetrySource>());
-            services.AddInstance(provider.GetRequiredService<TelemetryListener>());
-#pragma warning restore 0618
+            services.AddInstance(provider.GetRequiredService<DiagnosticSource>());
+            services.AddInstance(provider.GetRequiredService<DiagnosticListener>());
 
             return services;
         }
