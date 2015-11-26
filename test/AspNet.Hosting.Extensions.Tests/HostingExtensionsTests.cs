@@ -27,12 +27,12 @@ namespace AspNet.Hosting.Extensions.Tests {
                 app => app.Isolate(
                     // Configure the isolated pipeline.
                     builder => builder.Run(async context => {
-                        var service = context.ApplicationServices.GetService<ValueService>();
+                        var service = context.RequestServices.GetService<ValueService>();
 
                         await context.Response.WriteAsync(service?.Value ?? "<null>");
                     })),
 
-                services => services.AddInstance(new ValueService("Dummy")));
+                services => services.AddSingleton(new ValueService("Dummy")));
 
             var client = server.CreateClient();
 
@@ -55,10 +55,10 @@ namespace AspNet.Hosting.Extensions.Tests {
                     builder => { },
 
                     // Configure the isolated services.
-                    services => services.AddInstance(new ValueService("Dummy")));
+                    services => services.AddSingleton(new ValueService("Dummy")));
 
                 app.Run(async context => {
-                    var service = context.ApplicationServices.GetService<ValueService>();
+                    var service = context.RequestServices.GetService<ValueService>();
 
                     await context.Response.WriteAsync(service?.Value ?? "<null>");
                 });
@@ -86,14 +86,14 @@ namespace AspNet.Hosting.Extensions.Tests {
                     builder => { },
 
                     // Configure the isolated services.
-                    services => services.AddInstance(new ValueService("Dummy")));
+                    services => services.AddSingleton(new ValueService("Dummy")));
 
                 app.Run(async context => {
-                    var service = context.ApplicationServices.GetRequiredService<ValueService>();
+                    var service = context.RequestServices.GetRequiredService<ValueService>();
 
                     await context.Response.WriteAsync(service.Value);
                 });
-            }, services => services.AddInstance(new ValueService("Bob")));
+            }, services => services.AddSingleton(new ValueService("Bob")));
 
             var client = server.CreateClient();
 
@@ -115,13 +115,13 @@ namespace AspNet.Hosting.Extensions.Tests {
                 app.Isolate(
                     // Configure the isolated pipeline.
                     builder => builder.Run(async context => {
-                        var service = context.ApplicationServices.GetRequiredService<ValueService>();
+                        var service = context.RequestServices.GetRequiredService<ValueService>();
 
                         await context.Response.WriteAsync(service.Value);
                     }),
 
                     // Configure the isolated services.
-                    services => services.AddInstance(new ValueService("Dummy")));
+                    services => services.AddSingleton(new ValueService("Dummy")));
             }, services => {
                 // Allow the isolated environment to resolve
                 // the value service defined at the global level.

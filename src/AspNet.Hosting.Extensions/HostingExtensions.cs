@@ -154,15 +154,13 @@ namespace Microsoft.AspNet.Builder {
             builder.ApplicationServices = provider;
 
             builder.Use(async (context, next) => {
-                var priorApplicationServices = context.ApplicationServices;
-                var scopeFactory = provider.GetRequiredService<IServiceScopeFactory>();
+                var factory = provider.GetRequiredService<IServiceScopeFactory>();
 
                 // Store the original request services in the current ASP.NET context.
                 context.Items[typeof(IServiceProvider)] = context.RequestServices;
 
                 try {
-                    using (var scope = scopeFactory.CreateScope()) {
-                        context.ApplicationServices = provider;
+                    using (var scope = factory.CreateScope()) {
                         context.RequestServices = scope.ServiceProvider;
 
                         await next();
@@ -171,7 +169,6 @@ namespace Microsoft.AspNet.Builder {
 
                 finally {
                     context.RequestServices = null;
-                    context.ApplicationServices = priorApplicationServices;
                 }
             });
 
@@ -181,12 +178,10 @@ namespace Microsoft.AspNet.Builder {
                 // Run the rest of the pipeline in the original context,
                 // with the services defined by the parent application builder.
                 builder.Run(async context => {
-                    var priorApplicationServices = context.ApplicationServices;
-                    var scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+                    var factory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
 
                     try {
-                        using (var scope = scopeFactory.CreateScope()) {
-                            context.ApplicationServices = app.ApplicationServices;
+                        using (var scope = factory.CreateScope()) {
                             context.RequestServices = scope.ServiceProvider;
 
                             await next(context);
@@ -195,7 +190,6 @@ namespace Microsoft.AspNet.Builder {
 
                     finally {
                         context.RequestServices = null;
-                        context.ApplicationServices = priorApplicationServices;
                     }
                 });
 
@@ -238,15 +232,19 @@ namespace Microsoft.AspNet.Builder {
 
             // Copy the services added by the hosting layer.
             // See https://github.com/aspnet/Hosting/blob/dev/src/Microsoft.AspNet.Hosting/WebHostBuilder.cs.
-            services.AddInstance(provider.GetRequiredService<IHostingEnvironment>());
-            services.AddInstance(provider.GetRequiredService<ILoggerFactory>());
-            services.AddInstance(provider.GetRequiredService<IApplicationEnvironment>());
-            services.AddInstance(provider.GetRequiredService<IApplicationLifetime>());
-            services.AddInstance(provider.GetRequiredService<IHttpContextFactory>());
-            services.AddInstance(provider.GetRequiredService<IHttpContextAccessor>());
 
-            services.AddInstance(provider.GetRequiredService<DiagnosticSource>());
-            services.AddInstance(provider.GetRequiredService<DiagnosticListener>());
+            if (provider.GetService<IHttpContextAccessor>() != null) {
+                services.AddSingleton(provider.GetService<IHttpContextAccessor>());
+            }
+
+            services.AddSingleton(provider.GetRequiredService<IHostingEnvironment>());
+            services.AddSingleton(provider.GetRequiredService<ILoggerFactory>());
+            services.AddSingleton(provider.GetRequiredService<IApplicationEnvironment>());
+            services.AddSingleton(provider.GetRequiredService<IApplicationLifetime>());
+            services.AddSingleton(provider.GetRequiredService<IHttpContextFactory>());
+
+            services.AddSingleton(provider.GetRequiredService<DiagnosticSource>());
+            services.AddSingleton(provider.GetRequiredService<DiagnosticListener>());
 
             return services;
         }
