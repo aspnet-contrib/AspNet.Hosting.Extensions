@@ -208,24 +208,27 @@ namespace Microsoft.AspNet.Builder {
         private static ServiceCollection CreateDefaultServiceCollection([NotNull] IServiceProvider provider) {
             var services = new ServiceCollection();
 
-            if (PlatformServices.Default?.Application != null) {
-                services.TryAdd(ServiceDescriptor.Instance(PlatformServices.Default.Application));
-            }
+            var defaultPlatformServices = PlatformServices.Default;
+            if (defaultPlatformServices != null) {
+                if (defaultPlatformServices.Application != null) {
+                    services.TryAdd(ServiceDescriptor.Instance(defaultPlatformServices.Application));
+                }
 
-            if (PlatformServices.Default?.Runtime != null) {
-                services.TryAdd(ServiceDescriptor.Instance(PlatformServices.Default.Runtime));
-            }
+                if (defaultPlatformServices.Runtime != null) {
+                    services.TryAdd(ServiceDescriptor.Instance(defaultPlatformServices.Runtime));
+                }
 
-            if (PlatformServices.Default?.AssemblyLoadContextAccessor != null) {
-                services.TryAdd(ServiceDescriptor.Instance(PlatformServices.Default.AssemblyLoadContextAccessor));
-            }
+                if (defaultPlatformServices.AssemblyLoadContextAccessor != null) {
+                    services.TryAdd(ServiceDescriptor.Instance(defaultPlatformServices.AssemblyLoadContextAccessor));
+                }
 
-            if (PlatformServices.Default?.AssemblyLoaderContainer != null) {
-                services.TryAdd(ServiceDescriptor.Instance(PlatformServices.Default.AssemblyLoaderContainer));
-            }
+                if (defaultPlatformServices.AssemblyLoaderContainer != null) {
+                    services.TryAdd(ServiceDescriptor.Instance(defaultPlatformServices.AssemblyLoaderContainer));
+                }
 
-            if (PlatformServices.Default?.LibraryManager != null) {
-                services.TryAdd(ServiceDescriptor.Instance(PlatformServices.Default.LibraryManager));
+                if (defaultPlatformServices.LibraryManager != null) {
+                    services.TryAdd(ServiceDescriptor.Instance(defaultPlatformServices.LibraryManager));
+                }
             }
 
             services.AddLogging();
