@@ -83,6 +83,7 @@ namespace Microsoft.AspNet.Builder {
 
             return app.Isolate(builder => builder.Map(path, configuration), serviceConfiguration);
         }
+
         /// <summary>
         /// Creates a new isolated application builder which gets its own <see cref="ServiceCollection"/>, which only
         /// has the default services registered. It will not share the <see cref="ServiceCollection"/> from the
@@ -112,7 +113,6 @@ namespace Microsoft.AspNet.Builder {
             [NotNull] Action<IApplicationBuilder> configuration) {
             return app.Isolate(configuration, services => services.BuildServiceProvider());
         }
-
 
         /// <summary>
         /// Creates a new isolated application builder which gets its own <see cref="ServiceCollection"/>, which only
@@ -216,18 +216,6 @@ namespace Microsoft.AspNet.Builder {
 
                 if (defaultPlatformServices.Runtime != null) {
                     services.TryAdd(ServiceDescriptor.Instance(defaultPlatformServices.Runtime));
-                }
-
-                if (defaultPlatformServices.AssemblyLoadContextAccessor != null) {
-                    services.TryAdd(ServiceDescriptor.Instance(defaultPlatformServices.AssemblyLoadContextAccessor));
-                }
-
-                if (defaultPlatformServices.AssemblyLoaderContainer != null) {
-                    services.TryAdd(ServiceDescriptor.Instance(defaultPlatformServices.AssemblyLoaderContainer));
-                }
-
-                if (defaultPlatformServices.LibraryManager != null) {
-                    services.TryAdd(ServiceDescriptor.Instance(defaultPlatformServices.LibraryManager));
                 }
             }
 
