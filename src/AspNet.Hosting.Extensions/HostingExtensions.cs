@@ -211,18 +211,18 @@ namespace Microsoft.AspNet.Builder {
             var defaultPlatformServices = PlatformServices.Default;
             if (defaultPlatformServices != null) {
                 if (defaultPlatformServices.Application != null) {
-                    services.TryAdd(ServiceDescriptor.Instance(defaultPlatformServices.Application));
+                    services.TryAddSingleton(defaultPlatformServices.Application);
                 }
 
                 if (defaultPlatformServices.Runtime != null) {
-                    services.TryAdd(ServiceDescriptor.Instance(defaultPlatformServices.Runtime));
+                    services.TryAddSingleton(defaultPlatformServices.Runtime);
                 }
             }
 
             services.AddLogging();
 
-            // Copy the services added by the hosting layer.
-            // See https://github.com/aspnet/Hosting/blob/dev/src/Microsoft.AspNet.Hosting/WebHostBuilder.cs.
+            // Copy the services added by the hosting layer (WebApplicationBuilder.BuildHostingServices).
+            // See https://github.com/aspnet/Hosting/blob/dev/src/Microsoft.AspNet.Hosting/WebApplicationBuilder.cs.
 
             if (provider.GetService<IHttpContextAccessor>() != null) {
                 services.AddSingleton(provider.GetService<IHttpContextAccessor>());
