@@ -7,6 +7,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
+using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.TestHost;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,16 +24,21 @@ namespace AspNet.Hosting.Extensions.Tests {
         [Fact]
         public async Task OuterServiceNotAvailableInIsolation() {
             // Arrange
-            var server = TestServer.Create(
-                app => app.Isolate(
+            var builder = new WebApplicationBuilder()
+                .ConfigureServices(services => {
+                    services.AddSingleton(new ValueService("Dummy"));
+                })
+
+                .Configure(app => {
                     // Configure the isolated pipeline.
-                    builder => builder.Run(async context => {
+                    app.Isolate(map => map.Run(async context => {
                         var service = context.RequestServices.GetService<ValueService>();
 
                         await context.Response.WriteAsync(service?.Value ?? "<null>");
-                    })),
+                    }));
+                });
 
-                services => services.AddSingleton(new ValueService("Dummy")));
+            var server = new TestServer(builder);
 
             var client = server.CreateClient();
 
@@ -49,20 +55,23 @@ namespace AspNet.Hosting.Extensions.Tests {
         [Fact]
         public async Task InnerServiceNotAvailableOutsideIsolation() {
             // Arrange
-            var server = TestServer.Create(app => {
-                app.Isolate(
-                    // Configure the isolated pipeline.
-                    builder => { },
+            var builder = new WebApplicationBuilder()
+                .Configure(app => {
+                    app.Isolate(
+                        // Configure the isolated pipeline.
+                        map => { },
 
-                    // Configure the isolated services.
-                    services => services.AddSingleton(new ValueService("Dummy")));
+                        // Configure the isolated services.
+                        services => services.AddSingleton(new ValueService("Dummy")));
 
-                app.Run(async context => {
-                    var service = context.RequestServices.GetService<ValueService>();
+                    app.Run(async context => {
+                        var service = context.RequestServices.GetService<ValueService>();
 
-                    await context.Response.WriteAsync(service?.Value ?? "<null>");
+                        await context.Response.WriteAsync(service?.Value ?? "<null>");
+                    });
                 });
-            });
+
+            var server = new TestServer(builder);
 
             var client = server.CreateClient();
 
@@ -80,20 +89,27 @@ namespace AspNet.Hosting.Extensions.Tests {
         [Fact]
         public async Task InnerServiceNotConflictingWithServicesOutsideIsolation() {
             // Arrange
-            var server = TestServer.Create(app => {
-                app.Isolate(
-                    // Configure the isolated pipeline.
-                    builder => { },
+            var builder = new WebApplicationBuilder()
+                .ConfigureServices(services => {
+                    services.AddSingleton(new ValueService("Bob"));
+                })
 
-                    // Configure the isolated services.
-                    services => services.AddSingleton(new ValueService("Dummy")));
+                .Configure(app => {
+                    app.Isolate(
+                        // Configure the isolated pipeline.
+                        map => { },
 
-                app.Run(async context => {
-                    var service = context.RequestServices.GetRequiredService<ValueService>();
+                        // Configure the isolated services.
+                        services => services.AddSingleton(new ValueService("Dummy")));
 
-                    await context.Response.WriteAsync(service.Value);
+                    app.Run(async context => {
+                        var service = context.RequestServices.GetRequiredService<ValueService>();
+
+                        await context.Response.WriteAsync(service.Value);
+                    });
                 });
-            }, services => services.AddSingleton(new ValueService("Bob")));
+
+            var server = new TestServer(builder);
 
             var client = server.CreateClient();
 
@@ -111,27 +127,32 @@ namespace AspNet.Hosting.Extensions.Tests {
         [Fact]
         public async Task InnerServiceCanResolveServicesOutsideIsolationViaHttpContext() {
             // Arrange
-            var server = TestServer.Create(app => {
-                app.Isolate(
-                    // Configure the isolated pipeline.
-                    builder => builder.Run(async context => {
-                        var service = context.RequestServices.GetRequiredService<ValueService>();
+            var builder = new WebApplicationBuilder()
+                .ConfigureServices(services => {
+                    // Allow the isolated environment to resolve
+                    // the value service defined at the global level.
+                    services.AddScoped(provider => {
+                        var accessor = provider.GetRequiredService<IHttpContextAccessor>();
+                        var container = (IServiceScope) accessor.HttpContext.Items[typeof(IServiceProvider)];
 
-                        await context.Response.WriteAsync(service.Value);
-                    }),
+                        return container.ServiceProvider.GetRequiredService<ValueService>();
+                    });
+                })
 
-                    // Configure the isolated services.
-                    services => services.AddSingleton(new ValueService("Dummy")));
-            }, services => {
-                // Allow the isolated environment to resolve
-                // the value service defined at the global level.
-                services.AddScoped(provider => {
-                    var accessor = provider.GetRequiredService<IHttpContextAccessor>();
-                    var container = (IServiceScope) accessor.HttpContext.Items[typeof(IServiceProvider)];
+                .Configure(app => {
+                    app.Isolate(
+                        // Configure the isolated pipeline.
+                        map => map.Run(async context => {
+                            var service = context.RequestServices.GetRequiredService<ValueService>();
 
-                    return container.ServiceProvider.GetRequiredService<ValueService>();
+                            await context.Response.WriteAsync(service.Value);
+                        }),
+
+                        // Configure the isolated services.
+                        services => services.AddSingleton(new ValueService("Dummy")));
                 });
-            });
+
+            var server = new TestServer(builder);
 
             var client = server.CreateClient();
 

@@ -6,6 +6,7 @@
 
 using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
+using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.TestHost;
 using Owin;
@@ -24,11 +25,14 @@ namespace AspNet.Hosting.Katana.Extensions.Tests {
         [Fact]
         public async Task KatanaPipelineCanBeAccessedFromAspNet() {
             // Arrange
-            var server = TestServer.Create(app => app.UseKatana(builder => {
-                builder.Run(async context => {
-                    await context.Response.WriteAsync("Bob");
-                });
-            }));
+            var builder = new WebApplicationBuilder()
+                .Configure(app => app.UseKatana(map => {
+                    map.Run(async context => {
+                        await context.Response.WriteAsync("Bob");
+                    });
+                }));
+
+            var server = new TestServer(builder);
 
             var client = server.CreateClient();
 
@@ -47,13 +51,16 @@ namespace AspNet.Hosting.Katana.Extensions.Tests {
         [Fact]
         public async Task KatanaPipelineIsNotTerminating() {
             // Arrange
-            var server = TestServer.Create(app => {
-                app.UseKatana(builder => { });
+            var builder = new WebApplicationBuilder()
+                .Configure(app => {
+                    app.UseKatana(map => { });
 
-                app.Run(async context => {
-                    await context.Response.WriteAsync("Bob");
+                    app.Run(async context => {
+                        await context.Response.WriteAsync("Bob");
+                    });
                 });
-            });
+
+            var server = new TestServer(builder);
 
             var client = server.CreateClient();
 
@@ -72,15 +79,18 @@ namespace AspNet.Hosting.Katana.Extensions.Tests {
         [Fact]
         public async Task KatanaPipelineCanStopRequestProcessing() {
             // Arrange
-            var server = TestServer.Create(app => {
-                app.UseKatana(builder => builder.Run(async context => {
-                    await context.Response.WriteAsync("Alice");
-                }));
+            var builder = new WebApplicationBuilder()
+                .Configure(app => {
+                    app.UseKatana(map => map.Run(async context => {
+                        await context.Response.WriteAsync("Alice");
+                    }));
 
-                app.Run(async context => {
-                    await context.Response.WriteAsync("Bob");
+                    app.Run(async context => {
+                        await context.Response.WriteAsync("Bob");
+                    });
                 });
-            });
+
+            var server = new TestServer(builder);
 
             var client = server.CreateClient();
 
