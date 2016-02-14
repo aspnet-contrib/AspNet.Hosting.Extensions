@@ -11,16 +11,20 @@
 
     "dependencies": {
         "AspNet.Hosting.Katana.Extensions": "1.0.0-*",
-        "Microsoft.AspNet.Testing": "1.0.0-*",
-        "Microsoft.AspNet.TestHost": "1.0.0-*",
-        "xunit.runner.aspnet": "2.0.0-aspnet-*"
-    },
-
-    "commands": {
-        "test": "xunit.runner.aspnet"
+        "Microsoft.AspNetCore.Testing": "1.0.0-*",
+        "Microsoft.AspNetCore.TestHost": "1.0.0-*",
+        "Microsoft.NETCore.Platforms": "1.0.1-*",
+        "xunit.runner.aspnet": "2.0.0-aspnet-rc2-*",
+        "xunit.runner.console": "2.1.0"
     },
 
     "frameworks": {
         "dnx451": { }
+    },
+
+    "testRunner": "xunit",
+
+    "commands": {
+        "test": "xunit.runner.aspnet"
     }
 }

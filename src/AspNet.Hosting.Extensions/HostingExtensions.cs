@@ -7,17 +7,17 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.AspNet.Builder.Internal;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Hosting.Startup;
-using Microsoft.AspNet.Http;
+using JetBrains.Annotations;
+using Microsoft.AspNetCore.Builder.Internal;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Startup;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 
-namespace Microsoft.AspNet.Builder {
+namespace Microsoft.AspNetCore.Builder {
     /// <summary>
     /// Provides extension methods for <see cref="IApplicationBuilder"/>.
     /// </summary>
@@ -221,8 +221,8 @@ namespace Microsoft.AspNet.Builder {
 
             services.AddLogging();
 
-            // Copy the services added by the hosting layer (WebApplicationBuilder.BuildHostingServices).
-            // See https://github.com/aspnet/Hosting/blob/dev/src/Microsoft.AspNet.Hosting/WebApplicationBuilder.cs.
+            // Copy the services added by the hosting layer (WebHostBuilder.BuildHostingServices).
+            // See https://github.com/aspnet/Hosting/blob/dev/src/Microsoft.AspNetCore.Hosting/WebHostBuilder.cs.
 
             if (provider.GetService<IHttpContextAccessor>() != null) {
                 services.AddSingleton(provider.GetService<IHttpContextAccessor>());

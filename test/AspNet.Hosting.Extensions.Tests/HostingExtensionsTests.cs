@@ -6,10 +6,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.TestHost;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
@@ -24,7 +24,7 @@ namespace AspNet.Hosting.Extensions.Tests {
         [Fact]
         public async Task OuterServiceNotAvailableInIsolation() {
             // Arrange
-            var builder = new WebApplicationBuilder()
+            var builder = new WebHostBuilder()
                 .ConfigureServices(services => {
                     services.AddSingleton(new ValueService("Dummy"));
                 })
@@ -55,7 +55,7 @@ namespace AspNet.Hosting.Extensions.Tests {
         [Fact]
         public async Task InnerServiceNotAvailableOutsideIsolation() {
             // Arrange
-            var builder = new WebApplicationBuilder()
+            var builder = new WebHostBuilder()
                 .Configure(app => {
                     app.Isolate(
                         // Configure the isolated pipeline.
@@ -89,7 +89,7 @@ namespace AspNet.Hosting.Extensions.Tests {
         [Fact]
         public async Task InnerServiceNotConflictingWithServicesOutsideIsolation() {
             // Arrange
-            var builder = new WebApplicationBuilder()
+            var builder = new WebHostBuilder()
                 .ConfigureServices(services => {
                     services.AddSingleton(new ValueService("Bob"));
                 })
@@ -127,7 +127,7 @@ namespace AspNet.Hosting.Extensions.Tests {
         [Fact]
         public async Task InnerServiceCanResolveServicesOutsideIsolationViaHttpContext() {
             // Arrange
-            var builder = new WebApplicationBuilder()
+            var builder = new WebHostBuilder()
                 .ConfigureServices(services => {
                     // Allow the isolated environment to resolve
                     // the value service defined at the global level.

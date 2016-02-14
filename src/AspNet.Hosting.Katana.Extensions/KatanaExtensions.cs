@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.DataProtection;
-using Microsoft.AspNet.Hosting;
+using JetBrains.Annotations;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Internal;
 using Microsoft.Owin.Builder;
 using Microsoft.Owin.BuilderProperties;
 using Owin;
 
-namespace Microsoft.AspNet.Builder {
+namespace Microsoft.AspNetCore.Builder {
     /// <summary>
     /// Provides extension methods for <see cref="IApplicationBuilder"/>.
     /// </summary>
@@ -24,9 +24,7 @@ namespace Microsoft.AspNet.Builder {
         /// pipeline before adding it in the ASP.NET 5 application.
         /// </param>
         /// <returns>The ASP.NET 5 application builder.</returns>
-        public static IApplicationBuilder UseKatana(
-            [NotNull] this IApplicationBuilder app,
-            [NotNull] Action<IAppBuilder> configuration) {
+        public static IApplicationBuilder UseKatana([NotNull] this IApplicationBuilder app, [NotNull] Action<IAppBuilder> configuration) {
             return app.UseOwin(setup => setup(next => {
                 var builder = new AppBuilder();
                 var lifetime = app.ApplicationServices.GetService<IApplicationLifetime>();

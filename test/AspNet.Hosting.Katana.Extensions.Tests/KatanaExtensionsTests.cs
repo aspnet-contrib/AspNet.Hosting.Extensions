@@ -5,10 +5,10 @@
  */
 
 using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.TestHost;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.TestHost;
 using Owin;
 using Xunit;
 
@@ -25,7 +25,7 @@ namespace AspNet.Hosting.Katana.Extensions.Tests {
         [Fact]
         public async Task KatanaPipelineCanBeAccessedFromAspNet() {
             // Arrange
-            var builder = new WebApplicationBuilder()
+            var builder = new WebHostBuilder()
                 .Configure(app => app.UseKatana(map => {
                     map.Run(async context => {
                         await context.Response.WriteAsync("Bob");
@@ -51,7 +51,7 @@ namespace AspNet.Hosting.Katana.Extensions.Tests {
         [Fact]
         public async Task KatanaPipelineIsNotTerminating() {
             // Arrange
-            var builder = new WebApplicationBuilder()
+            var builder = new WebHostBuilder()
                 .Configure(app => {
                     app.UseKatana(map => { });
 
@@ -79,7 +79,7 @@ namespace AspNet.Hosting.Katana.Extensions.Tests {
         [Fact]
         public async Task KatanaPipelineCanStopRequestProcessing() {
             // Arrange
-            var builder = new WebApplicationBuilder()
+            var builder = new WebHostBuilder()
                 .Configure(app => {
                     app.UseKatana(map => map.Run(async context => {
                         await context.Response.WriteAsync("Alice");
