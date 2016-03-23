@@ -15,7 +15,9 @@
         "Microsoft.AspNetCore.TestHost": "1.0.0-*",
         "Microsoft.NETCore.Platforms": "1.0.1-*",
         "xunit.runner.aspnet": "2.0.0-aspnet-rc2-*",
-        "xunit.runner.console": "2.1.0"
+        "xunit.runner.console": "2.1.0",
+
+        "System.Runtime": "4.1.0-*"
     },
 
     "frameworks": {
