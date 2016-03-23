@@ -1,29 +1,41 @@
 ﻿{
-    "version": "1.0.0-*",
-    "description": "ASP.NET 5 hosting extensions.",
-    "authors": [ "Kévin Chalet", "Martin Johns" ],
-    "owners": [ "Kévin Chalet" ],
+  "version": "1.0.0-alpha2-*",
 
-    "projectUrl": "https://github.com/aspnet-contrib/AspNet.Hosting.Extensions",
-    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html",
+  "description": "Hosting extensions for ASP.NET Core.",
+  "authors": [ "Kévin Chalet", "Martin Johns" ],
+  "owners": [ "Kévin Chalet" ],
 
-    "compilationOptions": {
-        "warningsAsErrors": true
-    },
+  "projectUrl": "https://github.com/aspnet-contrib/AspNet.Hosting.Extensions",
+  "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html",
 
-    "dependencies": {
-        "JetBrains.Annotations": "10.1.2-eap",
-        "Microsoft.AspNetCore.Hosting": "1.0.0-*"
-    },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aspnet-contrib/AspNet.Hosting.Extensions"
+  },
 
-    "frameworks": {
-        "net451": { },
+  "tags": [
+    "aspnetcore",
+    "hosting"
+  ],
 
-        "netstandard1.3": {
-            "imports": [
-                "dotnet5.4",
-                "portable-net451+win8"
-            ]
-        }
+  "compilationOptions": {
+    "nowarn": [ "CS1591" ],
+    "xmlDoc": true
+  },
+
+  "dependencies": {
+    "JetBrains.Annotations": { "type": "build", "version": "10.1.2-eap" },
+    "Microsoft.AspNetCore.Hosting": "1.0.0-*"
+  },
+
+  "frameworks": {
+    "net451": { },
+
+    "netstandard1.3": {
+      "imports": [
+        "dotnet5.4",
+        "portable-net451+win8"
+      ]
     }
+  }
 }
