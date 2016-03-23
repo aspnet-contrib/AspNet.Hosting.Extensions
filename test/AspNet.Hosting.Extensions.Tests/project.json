@@ -7,7 +7,6 @@
     "AspNet.Hosting.Extensions": "1.0.0-*",
     "Microsoft.AspNetCore.Testing": "1.0.0-*",
     "Microsoft.AspNetCore.TestHost": "1.0.0-*",
-    "Microsoft.NETCore.Platforms": "1.0.1-*",
     "xunit": "2.1.0",
     "xunit.runner.aspnet": "2.0.0-aspnet-rc2-*",
 
@@ -17,7 +16,8 @@
   "frameworks": {
     "netstandardapp1.5": {
       "dependencies": {
-        "dotnet-test-xunit": "1.0.0-dev-*"
+        "dotnet-test-xunit": "1.0.0-dev-*",
+        "NETStandard.Library": "1.0.0-*"
       },
 
       "imports": [
