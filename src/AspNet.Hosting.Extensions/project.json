@@ -29,7 +29,12 @@
   },
 
   "frameworks": {
-    "net451": { },
+    "net451": {
+      "frameworkAssemblies": {
+        "System.ComponentModel": { "type": "build", "version": "4.0.0.0" },
+        "System.Runtime": { "type": "build", "version": "4.0.10.0" }
+      }
+    },
 
     "netstandard1.3": {
       "imports": [

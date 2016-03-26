@@ -26,13 +26,14 @@
     "JetBrains.Annotations": { "type": "build", "version": "10.1.2-eap" },
     "Microsoft.AspNetCore.DataProtection.Abstractions": "1.0.0-*",
     "Microsoft.AspNetCore.Hosting": "1.0.0-*",
-    "Microsoft.AspNetCore.Owin": "1.0.0-*"
+    "Microsoft.AspNetCore.Owin": "1.0.0-*",
+    "Microsoft.Owin": "3.0.0"
   },
 
   "frameworks": {
     "net451": {
-      "dependencies": {
-        "Microsoft.Owin": "3.0.0"
+      "frameworkAssemblies": {
+        "System.ComponentModel": { "type": "build", "version": "4.0.0.0" }
       }
     }
   }

@@ -7,14 +7,18 @@
     "AspNet.Hosting.Katana.Extensions": "1.0.0-*",
     "Microsoft.AspNetCore.Testing": "1.0.0-*",
     "Microsoft.AspNetCore.TestHost": "1.0.0-*",
-    "xunit.runner.aspnet": "2.0.0-aspnet-rc2-*",
+    "xunit": "2.1.0",
     "xunit.runner.console": "2.1.0",
 
     "System.Runtime": "4.1.0-*"
   },
 
   "frameworks": {
-    "dnx451": { }
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Runtime": { "type": "build", "version": "4.0.10.0" }
+      }
+    }
   },
 
   "testRunner": "xunit",
