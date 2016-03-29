@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.ObjectPool;
 using Microsoft.Extensions.PlatformAbstractions;
 
 namespace Microsoft.AspNetCore.Builder {
@@ -208,21 +209,13 @@ namespace Microsoft.AspNetCore.Builder {
         private static ServiceCollection CreateDefaultServiceCollection([NotNull] IServiceProvider provider) {
             var services = new ServiceCollection();
 
-            var defaultPlatformServices = PlatformServices.Default;
-            if (defaultPlatformServices != null) {
-                if (defaultPlatformServices.Application != null) {
-                    services.TryAddSingleton(defaultPlatformServices.Application);
-                }
-
-                if (defaultPlatformServices.Runtime != null) {
-                    services.TryAddSingleton(defaultPlatformServices.Runtime);
-                }
-            }
-
-            services.AddLogging();
-
             // Copy the services added by the hosting layer (WebHostBuilder.BuildHostingServices).
             // See https://github.com/aspnet/Hosting/blob/dev/src/Microsoft.AspNetCore.Hosting/WebHostBuilder.cs.
+
+            services.AddLogging();
+            
+            services.AddSingleton(PlatformServices.Default.Application);
+            services.AddSingleton(PlatformServices.Default.Runtime);
 
             if (provider.GetService<IHttpContextAccessor>() != null) {
                 services.AddSingleton(provider.GetService<IHttpContextAccessor>());
@@ -236,6 +229,8 @@ namespace Microsoft.AspNetCore.Builder {
 
             services.AddSingleton(provider.GetRequiredService<DiagnosticSource>());
             services.AddSingleton(provider.GetRequiredService<DiagnosticListener>());
+            
+            services.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
 
             return services;
         }
