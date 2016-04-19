@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.0-alpha2-*",
+  "version": "1.0.0-alpha3-*",
 
   "description": "OWIN/Katana hosting extensions for ASP.NET Core.",
   "authors": [ "Kévin Chalet" ],
