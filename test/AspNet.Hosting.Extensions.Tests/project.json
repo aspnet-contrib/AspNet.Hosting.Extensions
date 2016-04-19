@@ -4,17 +4,17 @@
   },
 
   "dependencies": {
-    "AspNet.Hosting.Extensions": "1.0.0-*",
-    "Microsoft.AspNetCore.Testing": "1.0.0-*",
-    "Microsoft.AspNetCore.TestHost": "1.0.0-*",
+    "AspNet.Hosting.Extensions": "1.0.0-alpha2-*",
+    "Microsoft.AspNetCore.Testing": "1.0.0-rc2-*",
+    "Microsoft.AspNetCore.TestHost": "1.0.0-rc2-*",
     "xunit": "2.1.0"
   },
 
   "frameworks": {
     "netcoreapp1.0": {
       "dependencies": {
-        "dotnet-test-xunit": "1.0.0-dev-*",
-        "Microsoft.NETCore.App": { "type": "platform", "version": "1.0.0-*" }
+        "dotnet-test-xunit": "1.0.0-rc2-*",
+        "Microsoft.NETCore.App": { "type": "platform", "version": "1.0.0-rc2-*" }
       },
 
       "imports": [

@@ -26,7 +26,7 @@
 
   "dependencies": {
     "JetBrains.Annotations": { "type": "build", "version": "10.1.2-eap" },
-    "Microsoft.AspNetCore.Hosting": "1.0.0-*"
+    "Microsoft.AspNetCore.Hosting": "1.0.0-rc2-*"
   },
 
   "frameworks": {
