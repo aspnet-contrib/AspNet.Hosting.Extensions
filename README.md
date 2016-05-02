@@ -6,8 +6,8 @@ AspNet.Hosting.Extensions
 
 **The latest nightly builds can be found on [MyGet](https://www.myget.org/gallery/aspnet-contrib)**.
 
-[![Build status](https://ci.appveyor.com/api/projects/status/xa09pdugnqqgn0vf/branch/dev?svg=true)](https://ci.appveyor.com/project/aspnet-contrib/aspnet-hosting-extensions/branch/dev)
-[![Build status](https://travis-ci.org/aspnet-contrib/AspNet.Hosting.Extensions.svg?branch=dev)](https://travis-ci.org/aspnet-contrib/AspNet.Hosting.Extensions)
+[![Build status](https://ci.appveyor.com/api/projects/status/xa09pdugnqqgn0vf/branch/release?svg=true)](https://ci.appveyor.com/project/aspnet-contrib/aspnet-hosting-extensions/branch/release)
+[![Build status](https://travis-ci.org/aspnet-contrib/AspNet.Hosting.Extensions.svg?branch=release)](https://travis-ci.org/aspnet-contrib/AspNet.Hosting.Extensions)
 
 ## Get started
 
