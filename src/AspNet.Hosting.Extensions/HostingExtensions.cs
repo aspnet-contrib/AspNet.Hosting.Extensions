@@ -213,9 +213,6 @@ namespace Microsoft.AspNetCore.Builder {
             // See https://github.com/aspnet/Hosting/blob/dev/src/Microsoft.AspNetCore.Hosting/WebHostBuilder.cs.
 
             services.AddLogging();
-            
-            services.AddSingleton(PlatformServices.Default.Application);
-            services.AddSingleton(PlatformServices.Default.Runtime);
 
             if (provider.GetService<IHttpContextAccessor>() != null) {
                 services.AddSingleton(provider.GetService<IHttpContextAccessor>());
@@ -223,7 +220,6 @@ namespace Microsoft.AspNetCore.Builder {
 
             services.AddSingleton(provider.GetRequiredService<IHostingEnvironment>());
             services.AddSingleton(provider.GetRequiredService<ILoggerFactory>());
-            services.AddSingleton(provider.GetRequiredService<IApplicationEnvironment>());
             services.AddSingleton(provider.GetRequiredService<IApplicationLifetime>());
             services.AddSingleton(provider.GetRequiredService<IHttpContextFactory>());
 

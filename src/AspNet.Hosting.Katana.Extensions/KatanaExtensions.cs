@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Owin.Builder;
@@ -16,21 +15,23 @@ namespace Microsoft.AspNetCore.Builder {
     /// </summary>
     public static class KatanaExtensions {
         /// <summary>
-        /// Provides a Katana/ASP.NET 5 bridge allowing to register middleware designed for OWIN/Katana.
+        /// Provides a Katana/ASP.NET Core bridge allowing to register middleware designed for OWIN/Katana.
         /// </summary>
-        /// <param name="app">The ASP.NET 5 application builder.</param>
+        /// <param name="app">The ASP.NET Core application builder.</param>
         /// <param name="configuration">
         /// The delegate allowing to configure the OWIN/Katana
-        /// pipeline before adding it in the ASP.NET 5 application.
+        /// pipeline before adding it in the ASP.NET Core application.
         /// </param>
-        /// <returns>The ASP.NET 5 application builder.</returns>
-        public static IApplicationBuilder UseKatana([NotNull] this IApplicationBuilder app, [NotNull] Action<IAppBuilder> configuration) {
+        /// <returns>The ASP.NET Core application builder.</returns>
+        public static IApplicationBuilder UseKatana(
+            [NotNull] this IApplicationBuilder app,
+            [NotNull] Action<IAppBuilder> configuration) {
             return app.UseOwin(setup => setup(next => {
                 var builder = new AppBuilder();
                 var lifetime = app.ApplicationServices.GetService<IApplicationLifetime>();
 
                 var properties = new AppProperties(builder.Properties);
-                properties.AppName = app.ApplicationServices.GetApplicationUniqueIdentifier();
+                properties.AppName = app.ApplicationServices.GetService<IHostingEnvironment>()?.ContentRootPath;
                 properties.OnAppDisposing = lifetime?.ApplicationStopping ?? CancellationToken.None;
                 properties.DefaultApp = next;
 

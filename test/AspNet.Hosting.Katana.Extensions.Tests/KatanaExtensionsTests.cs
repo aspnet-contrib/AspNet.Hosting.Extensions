@@ -20,7 +20,7 @@ namespace AspNet.Hosting.Katana.Extensions.Tests {
         /// <summary>
         /// Tests that the Katana pipeline registered using
         /// <see cref="KatanaExtensions.UseKatana"/>
-        /// is correctly registered in the ASP.NET 5 pipeline.
+        /// is correctly registered in the ASP.NET Core pipeline.
         /// </summary>
         [Fact]
         public async Task KatanaPipelineCanBeAccessedFromAspNet() {
@@ -46,7 +46,7 @@ namespace AspNet.Hosting.Katana.Extensions.Tests {
         /// <summary>
         /// Tests that the Katana pipeline registered using 
         /// <see cref="KatanaExtensions.UseKatana"/> doesn't
-        /// prevent the rest of the ASP.NET 5 pipeline from being executed.
+        /// prevent the rest of the ASP.NET Core pipeline from being executed.
         /// </summary>
         [Fact]
         public async Task KatanaPipelineIsNotTerminating() {
