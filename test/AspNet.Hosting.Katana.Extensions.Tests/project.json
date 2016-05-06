@@ -5,10 +5,10 @@
 
   "dependencies": {
     "AspNet.Hosting.Katana.Extensions": "1.0.0-alpha2-*",
+    "dotnet-test-xunit": "1.0.0-rc2-*",
     "Microsoft.AspNetCore.Testing": "1.0.0-rc2-*",
     "Microsoft.AspNetCore.TestHost": "1.0.0-rc2-*",
-    "xunit": "2.1.0",
-    "xunit.runner.console": "2.1.0"
+    "xunit": "2.1.0"
   },
 
   "frameworks": {
