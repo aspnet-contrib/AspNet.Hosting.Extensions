@@ -13,10 +13,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Startup;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.ObjectPool;
-using Microsoft.Extensions.PlatformAbstractions;
 
 namespace Microsoft.AspNetCore.Builder {
     /// <summary>
@@ -24,8 +22,8 @@ namespace Microsoft.AspNetCore.Builder {
     /// </summary>
     public static class HostingExtensions {
         /// <summary>
-        /// If the request path starts with the given <see cref="path"/>, execute the app configured via
-        /// the configuration method of the <see cref="TStartup"/> class instead of continuing to the next component
+        /// If the request path starts with the given <paramref name="path"/>, execute the app configured via
+        /// the configuration method of the <typeparamref name="TStartup"/> class instead of continuing to the next component
         /// in the pipeline. The new app will get an own newly created <see cref="ServiceCollection"/> and will not share
         /// the <see cref="ServiceCollection"/> of the originating app.
         /// </summary>
@@ -42,54 +40,54 @@ namespace Microsoft.AspNetCore.Builder {
         }
 
         /// <summary>
-        /// If the request path starts with the given <see cref="path"/>, execute the app configured via
-        /// <see cref="configuration"/> parameter instead of continuing to the next component in the pipeline.
+        /// If the request path starts with the given <paramref name="path"/>, execute the app configured via
+        /// <paramref name="configuration"/> parameter instead of continuing to the next component in the pipeline.
         /// The new app will get an own newly created <see cref="ServiceCollection"/> and will not share the
         /// <see cref="ServiceCollection"/> from the originating app.
         /// </summary>
         /// <param name="app">The application builder to register the isolated map with.</param>
         /// <param name="path">The path to match. Must not end with a '/'.</param>
         /// <param name="configuration">The branch to take for positive path matches.</param>
-        /// <param name="serviceConfiguration">A method to configure the newly created service collection.</param>
+        /// <param name="registration">A method to configure the newly created service collection.</param>
         /// <returns>The new pipeline with the isolated middleware configured.</returns>
         public static IApplicationBuilder IsolatedMap(
             [NotNull] this IApplicationBuilder app, PathString path,
             [NotNull] Action<IApplicationBuilder> configuration,
-            [NotNull] Action<IServiceCollection> serviceConfiguration) {
+            [NotNull] Action<IServiceCollection> registration) {
             return app.IsolatedMap(path, configuration, services => {
-                serviceConfiguration(services);
+                registration(services);
 
                 return services.BuildServiceProvider();
             });
         }
 
         /// <summary>
-        /// If the request path starts with the given <see cref="path"/>, execute the app configured via
-        /// <see cref="configuration"/> parameter instead of continuing to the next component in the pipeline.
+        /// If the request path starts with the given <paramref name="path"/>, execute the app configured via
+        /// <paramref name="configuration"/> parameter instead of continuing to the next component in the pipeline.
         /// The new app will get an own newly created <see cref="ServiceCollection"/> and will not share the
         /// <see cref="ServiceCollection"/> from the originating app.
         /// </summary>
         /// <param name="app">The application builder to register the isolated map with.</param>
         /// <param name="path">The path to match. Must not end with a '/'.</param>
         /// <param name="configuration">The branch to take for positive path matches.</param>
-        /// <param name="serviceConfiguration">A method to configure the newly created service collection.</param>
+        /// <param name="registration">A method to configure the newly created service collection.</param>
         /// <returns>The new pipeline with the isolated middleware configured.</returns>
         public static IApplicationBuilder IsolatedMap(
             [NotNull] this IApplicationBuilder app, PathString path,
             [NotNull] Action<IApplicationBuilder> configuration,
-            [NotNull] Func<IServiceCollection, IServiceProvider> serviceConfiguration) {
+            [NotNull] Func<IServiceCollection, IServiceProvider> registration) {
             if (path.HasValue && path.Value.EndsWith("/", StringComparison.Ordinal)) {
                 throw new ArgumentException("The path must not end with a '/'", nameof(path));
             }
 
-            return app.Isolate(builder => builder.Map(path, configuration), serviceConfiguration);
+            return app.Isolate(builder => builder.Map(path, configuration), registration);
         }
 
         /// <summary>
         /// Creates a new isolated application builder which gets its own <see cref="ServiceCollection"/>, which only
         /// has the default services registered. It will not share the <see cref="ServiceCollection"/> from the
         /// originating app. The isolated map will be configured using the configuration methods of the
-        /// <see cref="TStartup"/> class.
+        /// <typeparamref name="TStartup"/> class.
         /// </summary>
         /// <typeparam name="TStartup">The startup class used to configure the new app and the service collection.</typeparam>
         /// <param name="app">The application builder to create the isolated app from.</param>
@@ -122,14 +120,14 @@ namespace Microsoft.AspNetCore.Builder {
         /// </summary>
         /// <param name="app">The application builder to create the isolated app from.</param>
         /// <param name="configuration">The branch of the isolated app.</param>
-        /// <param name="serviceConfiguration">A method to configure the newly created service collection.</param>
+        /// <param name="registration">A method to configure the newly created service collection.</param>
         /// <returns>The new pipeline with the isolated application integrated.</returns>
         public static IApplicationBuilder Isolate(
             [NotNull] this IApplicationBuilder app,
             [NotNull] Action<IApplicationBuilder> configuration,
-            [NotNull] Action<IServiceCollection> serviceConfiguration) {
+            [NotNull] Action<IServiceCollection> registration) {
             return app.Isolate(configuration, services => {
-                serviceConfiguration(services);
+                registration(services);
 
                 return services.BuildServiceProvider();
             });
@@ -142,14 +140,14 @@ namespace Microsoft.AspNetCore.Builder {
         /// </summary>
         /// <param name="app">The application builder to create the isolated app from.</param>
         /// <param name="configuration">The branch of the isolated app.</param>
-        /// <param name="serviceConfiguration">A method to configure the newly created service collection.</param>
+        /// <param name="registration">A method to configure the newly created service collection.</param>
         /// <returns>The new pipeline with the isolated application integrated.</returns>
         public static IApplicationBuilder Isolate(
             [NotNull] this IApplicationBuilder app,
             [NotNull] Action<IApplicationBuilder> configuration,
-            [NotNull] Func<IServiceCollection, IServiceProvider> serviceConfiguration) {
+            [NotNull] Func<IServiceCollection, IServiceProvider> registration) {
             var services = CreateDefaultServiceCollection(app.ApplicationServices);
-            var provider = serviceConfiguration(services);
+            var provider = registration(services);
 
             var builder = new ApplicationBuilder(null);
             builder.ApplicationServices = provider;

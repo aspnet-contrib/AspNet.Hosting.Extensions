@@ -1,5 +1,5 @@
 ﻿{
-  "compilationOptions": {
+  "buildOptions": {
     "warningsAsErrors": true
   },
 
@@ -7,6 +7,7 @@
     "AspNet.Hosting.Katana.Extensions": "1.0.0-*",
     "Microsoft.AspNetCore.Testing": "1.0.0-*",
     "Microsoft.AspNetCore.TestHost": "1.0.0-*",
+    "Microsoft.NETCore.Platforms": "1.0.1-*",
     "xunit": "2.1.0",
     "xunit.runner.console": "2.1.0"
   },
