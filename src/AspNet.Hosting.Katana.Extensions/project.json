@@ -1,27 +1,31 @@
 ﻿{
   "version": "1.0.0-alpha2-*",
 
-  "description": "OWIN/Katana hosting extensions for ASP.NET Core.",
-  "authors": [ "Kévin Chalet" ],
-  "owners": [ "Kévin Chalet" ],
+  "packOptions": {
+    "description": "OWIN/Katana hosting extensions for ASP.NET Core.",
+    "authors": [ "Kévin Chalet" ],
+    "owners": [ "Kévin Chalet" ],
 
-  "projectUrl": "https://github.com/aspnet-contrib/AspNet.Hosting.Extensions",
-  "iconUrl": "https://avatars3.githubusercontent.com/u/7998081?s=64",
-  "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    "projectUrl": "https://github.com/aspnet-contrib/AspNet.Hosting.Extensions",
+    "iconUrl": "https://avatars3.githubusercontent.com/u/7998081?s=64",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html",
 
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/aspnet-contrib/AspNet.Hosting.Extensions"
+    "repository": {
+      "type": "git",
+      "url": "git://github.com/aspnet-contrib/AspNet.Hosting.Extensions"
+    },
+
+    "tags": [
+      "aspnetcore",
+      "extensions",
+      "hosting",
+      "katana",
+      "owin"
+    ]
   },
 
-  "tags": [
-    "aspnetcore",
-    "hosting",
-    "katana",
-    "owin"
-  ],
-
-  "compilationOptions": {
+  "buildOptions": {
+    "warningsAsErrors": true,
     "nowarn": [ "CS1591" ],
     "xmlDoc": true
   },

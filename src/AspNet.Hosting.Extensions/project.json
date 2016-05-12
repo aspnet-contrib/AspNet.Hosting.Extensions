@@ -1,25 +1,29 @@
 ﻿{
   "version": "1.0.0-alpha2-*",
 
-  "description": "Hosting extensions for ASP.NET Core.",
-  "authors": [ "Kévin Chalet", "Martin Johns" ],
-  "owners": [ "Kévin Chalet" ],
+  "packOptions": {
+    "description": "Hosting extensions for ASP.NET Core.",
+    "authors": [ "Kévin Chalet", "Martin Johns" ],
+    "owners": [ "Kévin Chalet" ],
 
-  "projectUrl": "https://github.com/aspnet-contrib/AspNet.Hosting.Extensions",
-  "iconUrl": "https://avatars3.githubusercontent.com/u/7998081?s=64",
-  "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html",
+    "projectUrl": "https://github.com/aspnet-contrib/AspNet.Hosting.Extensions",
+    "iconUrl": "https://avatars3.githubusercontent.com/u/7998081?s=64",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html",
 
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/aspnet-contrib/AspNet.Hosting.Extensions"
+    "repository": {
+      "type": "git",
+      "url": "git://github.com/aspnet-contrib/AspNet.Hosting.Extensions"
+    },
+
+    "tags": [
+      "aspnetcore",
+      "extensions",
+      "hosting"
+    ]
   },
 
-  "tags": [
-    "aspnetcore",
-    "hosting"
-  ],
-
-  "compilationOptions": {
+  "buildOptions": {
+    "warningsAsErrors": true,
     "nowarn": [ "CS1591" ],
     "xmlDoc": true
   },
