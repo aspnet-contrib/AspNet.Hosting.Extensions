@@ -38,10 +38,6 @@
   },
 
   "frameworks": {
-    "net451": {
-      "frameworkAssemblies": {
-        "System.ComponentModel": { "type": "build", "version": "4.0.0.0" }
-      }
-    }
+    "net451": { }
   }
 }
