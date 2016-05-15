@@ -5,12 +5,11 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder.Internal;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Startup;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -33,8 +32,8 @@ namespace Microsoft.AspNetCore.Builder {
         /// <returns>The new pipeline with the isolated middleware configured.</returns>
         public static IApplicationBuilder IsolatedMap<TStartup>([NotNull] this IApplicationBuilder app, PathString path)
             where TStartup : class {
-            var loader = app.ApplicationServices.GetRequiredService<IStartupLoader>();
-            var methods = loader.LoadMethods(typeof(TStartup), new List<string>());
+            var environment = app.ApplicationServices.GetRequiredService<IHostingEnvironment>();
+            var methods = StartupLoader.LoadMethods(app.ApplicationServices, typeof(TStartup), environment.EnvironmentName);
 
             return app.IsolatedMap(path, methods.ConfigureDelegate, methods.ConfigureServicesDelegate);
         }
@@ -93,8 +92,8 @@ namespace Microsoft.AspNetCore.Builder {
         /// <param name="app">The application builder to create the isolated app from.</param>
         /// <returns>The new pipeline with the isolated application integrated.</returns>
         public static IApplicationBuilder Isolate<TStartup>([NotNull] this IApplicationBuilder app) where TStartup : class {
-            var loader = app.ApplicationServices.GetRequiredService<IStartupLoader>();
-            var methods = loader.LoadMethods(typeof(TStartup), new List<string>());
+            var environment = app.ApplicationServices.GetRequiredService<IHostingEnvironment>();
+            var methods = StartupLoader.LoadMethods(app.ApplicationServices, typeof(TStartup), environment.EnvironmentName);
 
             return app.Isolate(methods.ConfigureDelegate, methods.ConfigureServicesDelegate);
         }
