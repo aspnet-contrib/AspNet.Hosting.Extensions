@@ -4,7 +4,7 @@
   },
 
   "dependencies": {
-    "AspNet.Hosting.Extensions": "1.0.0-*",
+    "AspNet.Hosting.Extensions": { "target": "project" },
     "dotnet-test-xunit": "1.0.0-*",
     "Microsoft.AspNetCore.Testing": "1.0.0-*",
     "Microsoft.AspNetCore.TestHost": "1.0.0-*",
