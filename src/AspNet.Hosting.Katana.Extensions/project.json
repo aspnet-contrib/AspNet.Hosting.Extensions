@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.0-alpha2-*",
+  "version": "1.0.0-alpha2-final",
 
   "packOptions": {
     "description": "OWIN/Katana hosting extensions for ASP.NET Core.",
@@ -32,8 +32,8 @@
 
   "dependencies": {
     "JetBrains.Annotations": { "type": "build", "version": "10.1.4" },
-    "Microsoft.AspNetCore.Hosting": "1.0.0-rc2-*",
-    "Microsoft.AspNetCore.Owin": "1.0.0-rc2-*",
+    "Microsoft.AspNetCore.Hosting": "1.0.0-rc2-final",
+    "Microsoft.AspNetCore.Owin": "1.0.0-rc2-final",
     "Microsoft.Owin": "3.0.0"
   },
 
