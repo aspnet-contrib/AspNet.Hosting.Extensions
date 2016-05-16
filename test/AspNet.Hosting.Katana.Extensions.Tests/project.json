@@ -6,7 +6,6 @@
   "dependencies": {
     "AspNet.Hosting.Katana.Extensions": { "target": "project" },
     "dotnet-test-xunit": "1.0.0-rc2-*",
-    "Microsoft.AspNetCore.Testing": "1.0.0-rc2-*",
     "Microsoft.AspNetCore.TestHost": "1.0.0-rc2-*",
     "Microsoft.NETCore.Platforms": "1.0.1-rc2-*",
     "xunit": "2.1.0"
