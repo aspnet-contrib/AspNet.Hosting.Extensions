@@ -1,9 +1,10 @@
 ﻿{
   "version": "1.0.0-alpha3-*",
 
+  "description": "Hosting extensions for ASP.NET Core.",
+  "authors": [ "Kévin Chalet", "Martin Johns" ],
+
   "packOptions": {
-    "description": "Hosting extensions for ASP.NET Core.",
-    "authors": [ "Kévin Chalet", "Martin Johns" ],
     "owners": [ "Kévin Chalet" ],
 
     "projectUrl": "https://github.com/aspnet-contrib/AspNet.Hosting.Extensions",
