@@ -1,9 +1,10 @@
 ﻿{
   "version": "1.0.0-alpha2-final",
 
+  "description": "OWIN/Katana hosting extensions for ASP.NET Core.",
+  "authors": [ "Kévin Chalet" ],
+
   "packOptions": {
-    "description": "OWIN/Katana hosting extensions for ASP.NET Core.",
-    "authors": [ "Kévin Chalet" ],
     "owners": [ "Kévin Chalet" ],
 
     "projectUrl": "https://github.com/aspnet-contrib/AspNet.Hosting.Extensions",
