@@ -34,10 +34,10 @@ app.UseKatana(map => {
 
 ## Support
 
-**Need help or wanna share your thoughts?** Don't hesitate to join our dedicated chat rooms:
+**Need help or wanna share your thoughts?** Don't hesitate to join us on Gitter or ask your question on StackOverflow:
 
-- **JabbR: [https://jabbr.net/#/rooms/aspnet-contrib](https://jabbr.net/#/rooms/aspnet-contrib)**
 - **Gitter: [https://gitter.im/aspnet-contrib/AspNet.Hosting.Extensions](https://gitter.im/aspnet-contrib/AspNet.Hosting.Extensions)**
+- **StackOverflow: [https://stackoverflow.com/questions/tagged/aspnet-contrib](https://stackoverflow.com/questions/tagged/aspnet-contrib)**
 
 ## Contributors
 
