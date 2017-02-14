@@ -9,11 +9,13 @@ using Microsoft.Owin.Builder;
 using Microsoft.Owin.BuilderProperties;
 using Owin;
 
-namespace Microsoft.AspNetCore.Builder {
+namespace Microsoft.AspNetCore.Builder
+{
     /// <summary>
     /// Provides extension methods for <see cref="IApplicationBuilder"/>.
     /// </summary>
-    public static class KatanaExtensions {
+    public static class KatanaExtensions
+    {
         /// <summary>
         /// Provides a Katana/ASP.NET Core bridge allowing to register middleware designed for OWIN/Katana.
         /// </summary>
@@ -25,8 +27,10 @@ namespace Microsoft.AspNetCore.Builder {
         /// <returns>The ASP.NET Core application builder.</returns>
         public static IApplicationBuilder UseKatana(
             [NotNull] this IApplicationBuilder app,
-            [NotNull] Action<IAppBuilder> configuration) {
-            return app.UseOwin(setup => setup(next => {
+            [NotNull] Action<IAppBuilder> configuration)
+        {
+            return app.UseOwin(setup => setup(next =>
+            {
                 var builder = new AppBuilder();
                 var lifetime = app.ApplicationServices.GetService<IApplicationLifetime>();
 

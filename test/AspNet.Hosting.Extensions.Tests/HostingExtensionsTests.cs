@@ -13,25 +13,31 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace AspNet.Hosting.Extensions.Tests {
+namespace AspNet.Hosting.Extensions.Tests
+{
     /// <summary>
     /// This class contains tests for the hosting extensions.
     /// </summary>
-    public class HostingExtensionsTests {
+    public class HostingExtensionsTests
+    {
         /// <summary>
         /// Tests that the service registered in the outer layer is not available in the isolated app.
         /// </summary>
         [Fact]
-        public async Task OuterServiceNotAvailableInIsolation() {
+        public async Task OuterServiceNotAvailableInIsolation()
+        {
             // Arrange
             var builder = new WebHostBuilder()
-                .ConfigureServices(services => {
+                .ConfigureServices(services =>
+                {
                     services.AddSingleton(new ValueService("Dummy"));
                 })
 
-                .Configure(app => {
+                .Configure(app =>
+                {
                     // Configure the isolated pipeline.
-                    app.Isolate(map => map.Run(async context => {
+                    app.Isolate(map => map.Run(async context =>
+                    {
                         var service = context.RequestServices.GetService<ValueService>();
 
                         await context.Response.WriteAsync(service?.Value ?? "<null>");
@@ -53,10 +59,12 @@ namespace AspNet.Hosting.Extensions.Tests {
         /// Tests that the service registered in the isolated app is not available outside the isolation.
         /// </summary>
         [Fact]
-        public async Task InnerServiceNotAvailableOutsideIsolation() {
+        public async Task InnerServiceNotAvailableOutsideIsolation()
+        {
             // Arrange
             var builder = new WebHostBuilder()
-                .Configure(app => {
+                .Configure(app =>
+                {
                     app.Isolate(
                         // Configure the isolated pipeline.
                         map => { },
@@ -64,7 +72,8 @@ namespace AspNet.Hosting.Extensions.Tests {
                         // Configure the isolated services.
                         services => services.AddSingleton(new ValueService("Dummy")));
 
-                    app.Run(async context => {
+                    app.Run(async context =>
+                    {
                         var service = context.RequestServices.GetService<ValueService>();
 
                         await context.Response.WriteAsync(service?.Value ?? "<null>");
@@ -87,14 +96,17 @@ namespace AspNet.Hosting.Extensions.Tests {
         /// conflict with services available outside the isolation.
         /// </summary>
         [Fact]
-        public async Task InnerServiceNotConflictingWithServicesOutsideIsolation() {
+        public async Task InnerServiceNotConflictingWithServicesOutsideIsolation()
+        {
             // Arrange
             var builder = new WebHostBuilder()
-                .ConfigureServices(services => {
+                .ConfigureServices(services =>
+                {
                     services.AddSingleton(new ValueService("Bob"));
                 })
 
-                .Configure(app => {
+                .Configure(app =>
+                {
                     app.Isolate(
                         // Configure the isolated pipeline.
                         map => { },
@@ -102,7 +114,8 @@ namespace AspNet.Hosting.Extensions.Tests {
                         // Configure the isolated services.
                         services => services.AddSingleton(new ValueService("Dummy")));
 
-                    app.Run(async context => {
+                    app.Run(async context =>
+                    {
                         var service = context.RequestServices.GetRequiredService<ValueService>();
 
                         await context.Response.WriteAsync(service.Value);
@@ -125,13 +138,16 @@ namespace AspNet.Hosting.Extensions.Tests {
         /// services available outside the isolation via the ASP.NET context.
         /// </summary>
         [Fact]
-        public async Task InnerServiceCanResolveServicesOutsideIsolationViaHttpContext() {
+        public async Task InnerServiceCanResolveServicesOutsideIsolationViaHttpContext()
+        {
             // Arrange
             var builder = new WebHostBuilder()
-                .ConfigureServices(services => {
+                .ConfigureServices(services =>
+                {
                     // Allow the isolated environment to resolve
                     // the value service defined at the global level.
-                    services.AddScoped(provider => {
+                    services.AddScoped(provider =>
+                    {
                         var accessor = provider.GetRequiredService<IHttpContextAccessor>();
                         var container = (IServiceScope) accessor.HttpContext.Items[typeof(IServiceProvider)];
 
@@ -139,10 +155,12 @@ namespace AspNet.Hosting.Extensions.Tests {
                     });
                 })
 
-                .Configure(app => {
+                .Configure(app =>
+                {
                     app.Isolate(
                         // Configure the isolated pipeline.
-                        map => map.Run(async context => {
+                        map => map.Run(async context =>
+                        {
                             var service = context.RequestServices.GetRequiredService<ValueService>();
 
                             await context.Response.WriteAsync(service.Value);
@@ -166,8 +184,10 @@ namespace AspNet.Hosting.Extensions.Tests {
         /// <summary>
         /// Dummy service that is used in tests.
         /// </summary>
-        private class ValueService {
-            public ValueService(string value) {
+        private class ValueService
+        {
+            public ValueService(string value)
+            {
                 Value = value;
             }
 

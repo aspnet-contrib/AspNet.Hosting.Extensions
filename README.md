@@ -12,19 +12,22 @@ AspNet.Hosting.Extensions
 ## Get started
 
 ```csharp
-app.Isolate(map => {
+app.Isolate(map =>
+{
     // Configure the isolated pipeline.
     map.UseMvc();
 },
 
-services => {
+services =>
+{
     // Register the services needed by the isolated pipeline.
     services.AddMvc();
 });
 ```
 
 ```csharp
-app.UseKatana(map => {
+app.UseKatana(map =>
+{
     // Configure the OWIN/Katana pipeline.
     var configuration = new HttpConfiguration();
 

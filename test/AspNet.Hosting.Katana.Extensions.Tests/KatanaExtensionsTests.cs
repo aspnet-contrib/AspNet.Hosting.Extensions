@@ -12,22 +12,27 @@ using Microsoft.AspNetCore.TestHost;
 using Owin;
 using Xunit;
 
-namespace AspNet.Hosting.Katana.Extensions.Tests {
+namespace AspNet.Hosting.Katana.Extensions.Tests
+{
     /// <summary>
     /// This class contains tests for the Katana extensions.
     /// </summary>
-    public class KatanaExtensionsTests {
+    public class KatanaExtensionsTests
+    {
         /// <summary>
         /// Tests that the Katana pipeline registered using
         /// <see cref="KatanaExtensions.UseKatana"/>
         /// is correctly registered in the ASP.NET Core pipeline.
         /// </summary>
         [Fact]
-        public async Task KatanaPipelineCanBeAccessedFromAspNet() {
+        public async Task KatanaPipelineCanBeAccessedFromAspNet()
+        {
             // Arrange
             var builder = new WebHostBuilder()
-                .Configure(app => app.UseKatana(map => {
-                    map.Run(async context => {
+                .Configure(app => app.UseKatana(map =>
+                {
+                    map.Run(async context =>
+                    {
                         await context.Response.WriteAsync("Bob");
                     });
                 }));
@@ -44,18 +49,21 @@ namespace AspNet.Hosting.Katana.Extensions.Tests {
         }
 
         /// <summary>
-        /// Tests that the Katana pipeline registered using 
+        /// Tests that the Katana pipeline registered using
         /// <see cref="KatanaExtensions.UseKatana"/> doesn't
         /// prevent the rest of the ASP.NET Core pipeline from being executed.
         /// </summary>
         [Fact]
-        public async Task KatanaPipelineIsNotTerminating() {
+        public async Task KatanaPipelineIsNotTerminating()
+        {
             // Arrange
             var builder = new WebHostBuilder()
-                .Configure(app => {
+                .Configure(app =>
+                {
                     app.UseKatana(map => { });
 
-                    app.Run(async context => {
+                    app.Run(async context =>
+                    {
                         await context.Response.WriteAsync("Bob");
                     });
                 });
@@ -72,20 +80,24 @@ namespace AspNet.Hosting.Katana.Extensions.Tests {
         }
 
         /// <summary>
-        /// Tests that the Katana pipeline registered using 
+        /// Tests that the Katana pipeline registered using
         /// <see cref="KatanaExtensions.UseKatana"/> stops
         /// processing the request if next() is not invoked.
         /// </summary>
         [Fact]
-        public async Task KatanaPipelineCanStopRequestProcessing() {
+        public async Task KatanaPipelineCanStopRequestProcessing()
+        {
             // Arrange
             var builder = new WebHostBuilder()
-                .Configure(app => {
-                    app.UseKatana(map => map.Run(async context => {
+                .Configure(app =>
+                {
+                    app.UseKatana(map => map.Run(async context =>
+                    {
                         await context.Response.WriteAsync("Alice");
                     }));
 
-                    app.Run(async context => {
+                    app.Run(async context =>
+                    {
                         await context.Response.WriteAsync("Bob");
                     });
                 });
