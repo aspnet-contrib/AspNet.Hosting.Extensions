@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{91BB179F-F068-4297-8CEF-EC534BD243E0}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AspNet.Hosting.Extensions", "src\AspNet.Hosting.Extensions\AspNet.Hosting.Extensions.xproj", "{A062FDF4-3FCC-43BC-90F3-B3C20CFE9347}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AspNet.Hosting.Extensions.Tests", "test\AspNet.Hosting.Extensions.Tests\AspNet.Hosting.Extensions.Tests.xproj", "{808F817F-1E56-48A8-AB62-39D7239A49F0}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3DA6B82F-AC9E-4E59-A3EC-EF080764178A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AspNet.Hosting.Katana.Extensions", "src\AspNet.Hosting.Katana.Extensions\AspNet.Hosting.Katana.Extensions.xproj", "{228E58D5-96ED-4FB1-9505-091C9CC6EE06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNet.Hosting.Extensions", "src\AspNet.Hosting.Extensions\AspNet.Hosting.Extensions.csproj", "{A062FDF4-3FCC-43BC-90F3-B3C20CFE9347}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AspNet.Hosting.Katana.Extensions.Tests", "test\AspNet.Hosting.Katana.Extensions.Tests\AspNet.Hosting.Katana.Extensions.Tests.xproj", "{3F3B588E-F8DF-4C13-B097-5B77B78A5542}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNet.Hosting.Extensions.Tests", "test\AspNet.Hosting.Extensions.Tests\AspNet.Hosting.Extensions.Tests.csproj", "{808F817F-1E56-48A8-AB62-39D7239A49F0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNet.Hosting.Katana.Extensions", "src\AspNet.Hosting.Katana.Extensions\AspNet.Hosting.Katana.Extensions.csproj", "{228E58D5-96ED-4FB1-9505-091C9CC6EE06}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNet.Hosting.Katana.Extensions.Tests", "test\AspNet.Hosting.Katana.Extensions.Tests\AspNet.Hosting.Katana.Extensions.Tests.csproj", "{3F3B588E-F8DF-4C13-B097-5B77B78A5542}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

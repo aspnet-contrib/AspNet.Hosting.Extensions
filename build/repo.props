@@ -1,0 +1,7 @@
+<Project>
+
+  <ItemGroup>
+    <ExcludeFromTest Include="$(RepositoryRoot)test\AspNet.Hosting.Katana.Extensions.Tests\*.csproj" Condition="'$(OS)' != 'Windows_NT'"/>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\build\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net451</TargetFramework>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <Description>OWIN/Katana hosting extensions for ASP.NET Core.</Description>
+    <Authors>Kévin Chalet</Authors>
+    <PackageTags>aspnetcore;extensions;hosting;katana;owin</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="$(JetBrainsVersion)" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="$(AspNetCoreVersion)" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="$(AspNetCoreVersion)" />
+    <PackageReference Include="Microsoft.AspNetCore.Owin" Version="$(AspNetCoreVersion)" />
+    <PackageReference Include="Microsoft.Owin" Version="$(OwinVersion)" />
+  </ItemGroup>
+
+</Project>
